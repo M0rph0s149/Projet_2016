@@ -139,7 +139,7 @@ public class TraitementVol {
     }
 
     public static void statistique7() {
-        // A COMPLETER
+        System.out.println("\nLe nombre de croisements lors du parcours est de " + vol.nbCroisement());
     }
 
     public static void statistique8() {

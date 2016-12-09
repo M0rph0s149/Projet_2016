@@ -15,6 +15,7 @@ public class Vol {
 	private Date date; // date du parcours
 	private String pilote; // nom et prenom du pilote
 	private Coordonnees[] tableCoordonnees;
+        private final int NB_COORDONNEE;
 
     /**
      * Construit le comportement d'un objet Vol qui est définit par une date, un pilote et un ensemble de coordonnées par lesquelles le vol est passé
@@ -26,6 +27,7 @@ public class Vol {
 		this.date = date;
 		this.pilote = pilote;
 		this.tableCoordonnees = tableCoordonnees;
+                NB_COORDONNEE = tableCoordonnees.length;
 	}
 
 	/**
@@ -34,7 +36,7 @@ public class Vol {
 	 * @return la duree
 	 */
 	public int duree() {
-		return this.tableCoordonnees.length-1;
+		return this.NB_COORDONNEE - 1;
 	}
 
     /**
@@ -44,7 +46,7 @@ public class Vol {
     public Coordonnees distanceMaximalePointDepart(){
 		double distanceMaximale = 0;
 		Coordonnees coordonneeMax = null;
-		for(int i = 1; i < this.tableCoordonnees.length; i++){
+		for(int i = 1; i < this.NB_COORDONNEE; i++){
 			double distance = this.tableCoordonnees[i].distance(this.tableCoordonnees[0]);
 			if(distance>distanceMaximale){
 				distanceMaximale = distance;
@@ -76,7 +78,7 @@ public class Vol {
     private Coordonnees extremeNord() {
         long latitudeMax = 0;
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
-        for (int i = 1; i < this.tableCoordonnees.length; i++) {
+        for (int i = 1; i < this.NB_COORDONNEE; i++) {
             if (this.tableCoordonnees[i].getLatitude() > latitudeMax) {
                 latitudeMax = this.tableCoordonnees[i].getLatitude();
                 coordonneeMax = this.tableCoordonnees[i];
@@ -93,7 +95,7 @@ public class Vol {
     private Coordonnees extremeSud() {
         long latitudeMin = 0;
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
-        for (int i = 1; i < this.tableCoordonnees.length; i++) {
+        for (int i = 1; i < this.NB_COORDONNEE; i++) {
             if (this.tableCoordonnees[i].getLatitude() < latitudeMin) {
                 latitudeMin = this.tableCoordonnees[i].getLatitude();
                 coordonneeMin = this.tableCoordonnees[i];
@@ -110,7 +112,7 @@ public class Vol {
     private Coordonnees extremeOuest() {
         long longitudeMin = 0;
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
-        for (int i = 1; i < this.tableCoordonnees.length; i++) {
+        for (int i = 1; i < this.NB_COORDONNEE; i++) {
             if (this.tableCoordonnees[i].getLongitude() < longitudeMin) {
                 longitudeMin = this.tableCoordonnees[i].getLongitude();
                 coordonneeMin = this.tableCoordonnees[i];
@@ -127,7 +129,7 @@ public class Vol {
     private Coordonnees extremeEst() {
         long longitudeMax = 0;
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
-        for (int i = 1; i < this.tableCoordonnees.length; i++) {
+        for (int i = 1; i < this.NB_COORDONNEE; i++) {
             if (this.tableCoordonnees[i].getLongitude() > longitudeMax) {
                 longitudeMax = this.tableCoordonnees[i].getLongitude();
                 coordonneeMax = this.tableCoordonnees[i];
@@ -145,7 +147,7 @@ public class Vol {
     public Coordonnees distancePlusProcheCible(Coordonnees cible) {
         double distanceMin = cible.distance(tableCoordonnees[0]);
         Coordonnees coordonneesMin = tableCoordonnees[0];
-        for (int i = 1; i < tableCoordonnees.length; i++) {
+        for (int i = 1; i < NB_COORDONNEE; i++) {
             if (cible.distance(tableCoordonnees[i]) < distanceMin) {
                 distanceMin = cible.distance(tableCoordonnees[i]);
                 coordonneesMin = tableCoordonnees[i];
@@ -161,7 +163,7 @@ public class Vol {
      */
     public double distanceTotale() {
         double distance = 0;
-        for (int i = 1; i < this.tableCoordonnees.length; i++) {
+        for (int i = 1; i < this.NB_COORDONNEE; i++) {
             distance += this.tableCoordonnees[i - 1].distance(tableCoordonnees[i]);
         }
         return distance;
@@ -174,18 +176,36 @@ public class Vol {
      * @return L'addition totale de l'espace entre chaque points de contournements
      */
     public double distanceContournement(int nbContournement) {
-        int ecart = tableCoordonnees.length / nbContournement + 1;
+        int ecart = NB_COORDONNEE / nbContournement + 1;
         int cpt = 0;
         double distance = 0;
         for (int i = 0; i < nbContournement; i++) {
             distance += tableCoordonnees[cpt].distance(tableCoordonnees[cpt + ecart]);
             cpt += ecart;
-            if (cpt + ecart > tableCoordonnees.length) {
-                distance += tableCoordonnees[cpt].distance(tableCoordonnees[tableCoordonnees.length - 1]);
+            if (cpt + ecart > NB_COORDONNEE) {
+                distance += tableCoordonnees[cpt].distance(tableCoordonnees[NB_COORDONNEE - 1]);
                 break;
             }
         }
         return distance;
+    }
+    
+    public int nbCroisement(){
+        int cpt = 0;
+        if(tableCoordonnees[0] == tableCoordonnees[NB_COORDONNEE - 1]){
+            cpt ++;
+        }
+        for(int i = 0; i < NB_COORDONNEE; i ++){
+            for(int j = 0; j < NB_COORDONNEE; j ++){
+                if(tableCoordonnees[j] == tableCoordonnees[i]){
+                    cpt ++;
+                }
+                if(j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])){
+                    cpt ++;
+                }
+            }
+        }
+        return cpt;
     }
 
     /**
