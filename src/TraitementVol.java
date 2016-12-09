@@ -1,7 +1,7 @@
 /**
  * Dossier algo Programme principal a completer
  *
- * @author ... <----- !!!!!!! renseignez vos noms ici !!!!!
+ * @author Rifaut Alexis -- Verelst Thomas
  *
  */
 public class TraitementVol {
@@ -117,10 +117,10 @@ public class TraitementVol {
     }
 
     public static void statistique3() {
-        System.out.println("\nLes coordonnees du lieu le plus au nord sont :\n" + vol.extremeNord().toString());
-        System.out.println("\nLes coordonnees du lieu le plus au sud sont :\n" + vol.extremeSud().toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'ouest sont :\n" + vol.extremeOuest().toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'est sont :\n" + vol.extremeEst().toString());
+        System.out.println("\nLes coordonnees du lieu le plus au nord sont :\n" + vol.extremeCoordonnees().get(0).toString());
+        System.out.println("\nLes coordonnees du lieu le plus au sud sont :\n" + vol.extremeCoordonnees().get(1).toString());
+        System.out.println("\nLes coordonnees du lieu le plus a l'ouest sont :\n" + vol.extremeCoordonnees().get(2).toString());
+        System.out.println("\nLes coordonnees du lieu le plus a l'est sont :\n" + vol.extremeCoordonnees().get(3).toString());
     }
 
     public static void statistique4() {
