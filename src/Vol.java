@@ -189,19 +189,32 @@ public class Vol {
         }
         return distance;
     }
-    
-    public int nbCroisement(){
+
+    public int nbCroisement() {
         int cpt = 0;
-        if(tableCoordonnees[0] == tableCoordonnees[NB_COORDONNEE - 1]){
-            cpt ++;
+        if (tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE - 1])) {
+            cpt++;
         }
-        for(int i = 0; i < NB_COORDONNEE; i ++){
-            for(int j = 0; j < NB_COORDONNEE; j ++){
-                if(tableCoordonnees[j] == tableCoordonnees[i]){
-                    cpt ++;
+        for (int i = 0; i < NB_COORDONNEE; i++) {
+            for (int j = 0; j < NB_COORDONNEE; j++) {
+                if (tableCoordonnees[j].equals(tableCoordonnees[i])) {
+                    cpt++;
                 }
-                if(j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])){
-                    cpt ++;
+                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])) {
+                    cpt++;
+                }
+            }
+        }
+        return cpt;
+    }
+
+    public int nbCiblesAtteintes(Coordonnees[] cibles) {
+        int cpt = 0;
+        for (int i = 0; i < cibles.length; i++) {
+            for (int j = 0; j < tableCoordonnees.length; j++) {
+                if (tableCoordonnees[j].equals(cibles[i])) {
+                    cpt++;
+                    break;
                 }
             }
         }
@@ -210,7 +223,7 @@ public class Vol {
 
     /**
      * Affiche le Vol
-     * 
+     *
      * @return Un String représentant l'objet
      */
     public String toString() {

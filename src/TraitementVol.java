@@ -89,20 +89,23 @@ public class TraitementVol {
     }
 
     public static Coordonnees[] creerParcours() {									//METHODE NON TESTEE  (Afficher coordonnees du tableau)
-        System.out.println("Combien de coordonnees?\nNombre de coordonnees:");
+        System.out.print("Combien de coordonnees voulez-vous ajouter ?\nNombre de coordonnees: ");
         int nombreCoordonnees = Utilitaires.lireUnEntierStrictementPositif();
         int compteurCoordonnees = 0;
 
         Coordonnees[] parcours = new Coordonnees[nombreCoordonnees];
 
-        System.out.println("Voulez-vous inscrire une coordonnee?");
+        System.out.println("Voulez-vous inscrire une coordonnee ? ");
         char reponse = Utilitaires.lireOouN();
+        
         while (compteurCoordonnees < parcours.length && reponse == 'O') {
             parcours[compteurCoordonnees] = lireCoordonnees();
             compteurCoordonnees++;
 
-            System.out.println("Voulez-vous continuer?");
-            reponse = Utilitaires.lireOouN();
+            if (compteurCoordonnees < parcours.length) {
+                System.out.println("Voulez-vous continuer?");
+                reponse = Utilitaires.lireOouN();
+            }
         }
 
         return parcours;
@@ -143,7 +146,8 @@ public class TraitementVol {
     }
 
     public static void statistique8() {
-        // A COMPLETER
+        System.out.println("\nRentrez les coordonnees de cibles a atteindre.");
+        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCiblesAtteintes(creerParcours()));
     }
 
     public static void statistique9() {
