@@ -1,6 +1,7 @@
-
 import java.util.Scanner;
-
+/*
+* @author Rifaut Alexis -- Verelst Thomas
+*/
 public class Utilitaires {
 
     public static Scanner scanner = new Scanner(System.in);
@@ -55,9 +56,4 @@ public class Utilitaires {
         resultat = (int) (nombreReel * (valeurMaximale - valeurMinimale + 1)) + valeurMinimale;
         return resultat;
     }
-    
-    public static long lireUnLong(){
-        return scanner.nextLong();
-    }
-
 }

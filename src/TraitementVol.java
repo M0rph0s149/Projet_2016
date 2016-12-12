@@ -19,34 +19,34 @@ public class TraitementVol {
             choix = lireChoix();
             switch (choix) {
                 case 1:
-                    statistique1();
+                    duree();
                     break;
                 case 2:
-                    statistique2();
+                    distanceMaximalePointDepart();
                     break;
                 case 3:
-                    statistique3();
+                    extremeCoordonnees();
                     break;
                 case 4:
-                    statistique4();
+                    distancePlusProcheCible();
                     break;
                 case 5:
-                    statistique5();
+                    distanceTotale();
                     break;
                 case 6:
-                    statistique6();
+                    distanceContournement();
                     break;
                 case 7:
-                    statistique7();
+                    nbCroisement();
                     break;
                 case 8:
-                    statistique8();
+                    nbCiblesAtteintes();
                     break;
                 case 9:
                     statistique9();
                     break;
                 case 10:
-                    statistique10();
+                    distanceMoyenne();
                     break;
             }
         } while (choix != 11);
@@ -65,8 +65,8 @@ public class TraitementVol {
         System.out.println("   7 --> nombre de croisement");
         System.out.println("   8 --> cibles atteintes");
         System.out.println("   9 --> nombre de cibles atteintes lors d'un parcours impose");
-        System.out.println("   10 --> A MODIFIER PLUS TARD");
-        System.out.println("   11 --> fin");
+        System.out.println("   10 --> distance moyenne entre chaque coordonnées");
+        System.out.println("   11 --> Quitter");
         System.out.print("\nTon choix : ");
         int choix = Utilitaires.lireUnEntierComprisEntre(1, 11);
         return choix;
@@ -111,42 +111,42 @@ public class TraitementVol {
         return parcours;
     }
 
-    public static void statistique1() {
+    public static void duree() {
         System.out.println("\nTon vol a dure " + vol.duree() + " unites temps.");
     }
 
-    public static void statistique2() {
+    public static void distanceMaximalePointDepart() {
         System.out.println("\nLes coordonnees du lieu le plus eloigne de ton point de depart sont :\n" + vol.distanceMaximalePointDepart().toString());
     }
 
-    public static void statistique3() {
-        System.out.println("\nLes coordonnees du lieu le plus au nord sont :\n" + vol.extremeCoordonnees().get(0).toString());
-        System.out.println("\nLes coordonnees du lieu le plus au sud sont :\n" + vol.extremeCoordonnees().get(1).toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'ouest sont :\n" + vol.extremeCoordonnees().get(2).toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'est sont :\n" + vol.extremeCoordonnees().get(3).toString());
+    public static void extremeCoordonnees() {
+        System.out.println("\nLes coordonnees du lieu le plus au nord sont :\n" + vol.extremeCoordonnees()[0].toString());
+        System.out.println("\nLes coordonnees du lieu le plus au sud sont :\n" + vol.extremeCoordonnees()[1].toString());
+        System.out.println("\nLes coordonnees du lieu le plus a l'ouest sont :\n" + vol.extremeCoordonnees()[2].toString());
+        System.out.println("\nLes coordonnees du lieu le plus a l'est sont :\n" + vol.extremeCoordonnees()[3].toString());
     }
 
-    public static void statistique4() {
+    public static void distancePlusProcheCible() {
         System.out.println("\nVeuillez rentrer les coordonnees d'une cible a atteindre lors de votre parcours.");
         System.out.println("Le point le plus proche d'une cible est aux coordonnees " + vol.distancePlusProcheCible(lireCoordonnees()).toString());
     }
 
-    public static void statistique5() {
+    public static void distanceTotale() {
         System.out.println("\nLa distance totale parcourue est de " + vol.distanceTotale() + " unites distance.");
     }
 
-    public static void statistique6() {
+    public static void distanceContournement() {
         System.out.println("\nCombien de points de contournement?");
         int nbContournement = Utilitaires.lireUnEntierComprisEntre(1, 2);
         System.out.println("\nLa distance totale parcourue avec contournements est de " + vol.distanceContournement(nbContournement));
     }
 
-    public static void statistique7() {
+    public static void nbCroisement() {
         System.out.println("\nLe nombre de croisements lors du parcours est de " + vol.nbCroisement());
     }
 
-    public static void statistique8() {
-        System.out.println("\nRentrez les coordonnees de cibles a atteindre.");
+    public static void nbCiblesAtteintes() {
+        System.out.println("\nRentrez les coordonnees de cibles à atteindre.");
         System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCiblesAtteintes(creerParcours()));
     }
 
@@ -154,8 +154,8 @@ public class TraitementVol {
         // A COMPLETER
     }
 
-    public static void statistique10() {
-        // A COMPLETER
+    public static void distanceMoyenne() {
+        System.out.println("\nLa distance moyenne entre chaque coordonnées est de " + vol.distanceMoyenne());
     }
 
     /**
@@ -211,4 +211,4 @@ public class TraitementVol {
         return null;
     }
 
-} // fin pgm
+}

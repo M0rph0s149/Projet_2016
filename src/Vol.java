@@ -1,71 +1,74 @@
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
- * Projet algo 
- * 
+ * Projet algo
+ *
  * Classe permettant de memoriser et traiter les coordonnees d'un parcours
- * 
+ *
  * @author Rifaut Alexis -- Verelst Thomas
- * 
- **/
+ *
+ *
+ */
 public class Vol {
-	private Date date; // date du parcours
-	private String pilote; // nom et prenom du pilote
-	private Coordonnees[] tableCoordonnees;
-        private final int NB_COORDONNEE;
+
+    private Date date;
+    private String pilote;
+    private Coordonnees[] tableCoordonnees;
+    private final int NB_COORDONNEE;
 
     /**
-     * Construit le comportement d'un objet Vol qui est définit par une date, un pilote et un ensemble de coordonnées par lesquelles le vol est passé
+     * Construit le comportement d'un objet Vol qui est définit par une date, un
+     * pilote et un ensemble de coordonnées par lesquelles le vol est passé
+     *
      * @param date Date du vol
      * @param pilote Nom du pilote
-     * @param tableCoordonnees Table de coordonnées par lesquelles le vol est passé
+     * @param tableCoordonnees Table de coordonnées par lesquelles le vol est
+     * passé
      */
     public Vol(Date date, String pilote, Coordonnees[] tableCoordonnees) {
-		this.date = date;
-		this.pilote = pilote;
-		this.tableCoordonnees = tableCoordonnees;
-                NB_COORDONNEE = tableCoordonnees.length;
-	}
+        this.date = date;
+        this.pilote = pilote;
+        this.tableCoordonnees = tableCoordonnees;
+        NB_COORDONNEE = tableCoordonnees.length;
+    }
 
-	/**
-	 * Cette methode renvoie la duree du vol
-	 * Une unite de temps correspond au temps ecoule entre 2 mesures de position du gps
-	 * @return la duree
-	 */
-	public int duree() {
-		return this.NB_COORDONNEE - 1;
-	}
+    /**
+     * Cette methode renvoie la duree du vol Une unite de temps correspond au
+     * temps ecoule entre 2 mesures de position du gps
+     *
+     * @return la duree
+     */
+    public int duree() {
+        return this.NB_COORDONNEE - 1;
+    }
 
     /**
      * Calcul la coordonnée enregistrée le plus éloignée du point de départ
+     *
      * @return La Coordonnees la plus éloignée du point de départ
      */
-    public Coordonnees distanceMaximalePointDepart(){
-		double distanceMaximale = 0;
-		Coordonnees coordonneeMax = null;
-		for(int i = 1; i < this.NB_COORDONNEE; i++){
-			double distance = this.tableCoordonnees[i].distance(this.tableCoordonnees[0]);
-			if(distance>distanceMaximale){
-				distanceMaximale = distance;
-				coordonneeMax = this.tableCoordonnees[i];
-			}
-		}
-		return coordonneeMax;
-	}
-    
+    public Coordonnees distanceMaximalePointDepart() {
+        double distanceMaximale = 0;
+        Coordonnees coordonneeMax = null;
+        for (int i = 1; i < this.NB_COORDONNEE; i++) {
+            double distance = this.tableCoordonnees[i].distance(this.tableCoordonnees[0]);
+            if (distance > distanceMaximale) {
+                distanceMaximale = distance;
+                coordonneeMax = this.tableCoordonnees[i];
+            }
+        }
+        return coordonneeMax;
+    }
+
     /**
      * Calcul les 4 coordonnées cardinales les plus extremes
+     *
      * @return List contenant les 4 Coordonnees cardinales les plus extremes
      */
-    public List extremeCoordonnees(){
-        List<Coordonnees> reponse  = new ArrayList<Coordonnees>();
-        reponse.add(0, extremeNord());
-        reponse.add(1, extremeSud());
-        reponse.add(2, extremeOuest());
-        reponse.add(3, extremeEst());
+    public Coordonnees[] extremeCoordonnees() {
+        Coordonnees[] reponse = new Coordonnees[4];
+        reponse[0] = extremeNord();
+        reponse[1] = extremeSud();
+        reponse[2] = extremeOuest();
+        reponse[3] = extremeEst();
 
         return reponse;
     }
@@ -140,7 +143,7 @@ public class Vol {
 
     /**
      * Calcul la coordonnée la plus proche d'une cible définie
-     * 
+     *
      * @param cible Coordonnees voulu pour rapprochement
      * @return Coodonnees la plus proche de la coordonnée cible
      */
@@ -158,7 +161,7 @@ public class Vol {
 
     /**
      * Calcul la distance totale du vol
-     * 
+     *
      * @return L'addition totale de l'espace entre chaque Coordonnees
      */
     public double distanceTotale() {
@@ -170,10 +173,12 @@ public class Vol {
     }
 
     /**
-     * Calcul la distance maximale du vol en passant par des points de contournements
-     * 
+     * Calcul la distance maximale du vol en passant par des points de
+     * contournements
+     *
      * @param nbContournement Nombre de points de contournements
-     * @return L'addition totale de l'espace entre chaque points de contournements
+     * @return L'addition totale de l'espace entre chaque points de
+     * contournements
      */
     public double distanceContournement(int nbContournement) {
         int ecart = NB_COORDONNEE / nbContournement + 1;
@@ -190,6 +195,11 @@ public class Vol {
         return distance;
     }
 
+    /**
+     * Calcul le nombre de croisements lors du parcours
+     *
+     * @return Le nombre de croisements
+     */
     public int nbCroisement() {
         int cpt = 0;
         if (tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE - 1])) {
@@ -208,11 +218,17 @@ public class Vol {
         return cpt;
     }
 
+    /**
+     * Calcul le nombre de cibles atteintes lors du parcours
+     *
+     * @param cibles Tableau contenant les cibles à atteindre
+     * @return Le nombre de cibles atteintes
+     */
     public int nbCiblesAtteintes(Coordonnees[] cibles) {
         int cpt = 0;
-        for (int i = 0; i < cibles.length; i++) {
-            for (int j = 0; j < tableCoordonnees.length; j++) {
-                if (tableCoordonnees[j].equals(cibles[i])) {
+        for (Coordonnees cible : cibles) {
+            for (Coordonnees tableCoordonnee : tableCoordonnees) {
+                if (tableCoordonnee.equals(cible)) {
                     cpt++;
                     break;
                 }
@@ -221,11 +237,32 @@ public class Vol {
         return cpt;
     }
 
+    public int nbCibleAtteintesLorsParcours(Coordonnees[] ParcoursImpose) {
+        //elle devra à nouveau être survolée ? Exliquation ?
+        return 0;
+    }
+
+    /**
+     * Calcul la distance moyenne entre chaque coordonnées du vol
+     *
+     * @return La distance moyenne entre chaque coordonnées du vol
+     */
+    public double distanceMoyenne() {
+        double moyenne = 0;
+        int cpt = 0;
+        for (int i = 0; i < tableCoordonnees.length - 1; i++) {
+            moyenne += tableCoordonnees[i].distance(tableCoordonnees[i + 1]);
+            cpt++;
+        }
+        return moyenne /= cpt;
+    }
+
     /**
      * Affiche le Vol
      *
      * @return Un String représentant l'objet
      */
+    @Override
     public String toString() {
         String texte = "Date: " + this.date + "\nPilote: " + this.pilote + "\nCoordonnees: \n";
         for (Coordonnees coordonnees : tableCoordonnees) {
@@ -233,4 +270,4 @@ public class Vol {
         }
         return texte;
     }
-} // fin classe
+}
