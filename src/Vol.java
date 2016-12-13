@@ -6,7 +6,6 @@
  *
  * @author Rifaut Alexis -- Verelst Thomas
  *
- *
  */
 public class Vol {
 
@@ -44,7 +43,7 @@ public class Vol {
      * Cette methode renvoie la duree du vol Une unite de temps correspond au
      * temps ecoule entre 2 mesures de position du gps
      *
-     * @return la duree
+     * @return la duree de voyage entre deux coordonnées
      */
     public int duree() {
         return this.NB_COORDONNEE - 1;
@@ -58,8 +57,10 @@ public class Vol {
     public Coordonnees distanceMaximalePointDepart() {
         double distanceMaximale = 0;
         Coordonnees coordonneeMax = null;
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
             double distance = this.tableCoordonnees[i].distance(this.tableCoordonnees[0]);
+            
             if (distance > distanceMaximale) {
                 distanceMaximale = distance;
                 coordonneeMax = this.tableCoordonnees[i];
@@ -75,6 +76,7 @@ public class Vol {
      */
     public Coordonnees[] extremeCoordonnees() {
         Coordonnees[] reponse = new Coordonnees[4];
+        
         reponse[0] = extremeNord();
         reponse[1] = extremeSud();
         reponse[2] = extremeOuest();
@@ -91,7 +93,9 @@ public class Vol {
     private Coordonnees extremeNord() {
         long latitudeMax = 0;
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
+            
             if (this.tableCoordonnees[i].getLatitude() > latitudeMax) {
                 latitudeMax = this.tableCoordonnees[i].getLatitude();
                 coordonneeMax = this.tableCoordonnees[i];
@@ -108,7 +112,9 @@ public class Vol {
     private Coordonnees extremeSud() {
         long latitudeMin = 0;
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
+            
             if (this.tableCoordonnees[i].getLatitude() < latitudeMin) {
                 latitudeMin = this.tableCoordonnees[i].getLatitude();
                 coordonneeMin = this.tableCoordonnees[i];
@@ -125,7 +131,9 @@ public class Vol {
     private Coordonnees extremeOuest() {
         long longitudeMin = 0;
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
+            
             if (this.tableCoordonnees[i].getLongitude() < longitudeMin) {
                 longitudeMin = this.tableCoordonnees[i].getLongitude();
                 coordonneeMin = this.tableCoordonnees[i];
@@ -142,7 +150,9 @@ public class Vol {
     private Coordonnees extremeEst() {
         long longitudeMax = 0;
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
+            
             if (this.tableCoordonnees[i].getLongitude() > longitudeMax) {
                 longitudeMax = this.tableCoordonnees[i].getLongitude();
                 coordonneeMax = this.tableCoordonnees[i];
@@ -164,7 +174,9 @@ public class Vol {
 
         double distanceMin = cible.distance(tableCoordonnees[0]);
         Coordonnees coordonneesMin = tableCoordonnees[0];
+        
         for (int i = 1; i < NB_COORDONNEE; i++) {
+            
             if (cible.distance(tableCoordonnees[i]) < distanceMin) {
                 distanceMin = cible.distance(tableCoordonnees[i]);
                 coordonneesMin = tableCoordonnees[i];
@@ -180,6 +192,7 @@ public class Vol {
      */
     public double distanceTotale() {
         double distance = 0;
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
             distance += this.tableCoordonnees[i - 1].distance(tableCoordonnees[i]);
         }
