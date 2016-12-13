@@ -181,20 +181,43 @@ public class Vol {
      * contournements
      */
     public double distanceContournement(int nbContournement) {
+        double distance = tableCoordonnees[0].distance(tableCoordonnees[1]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[1]);
         
-        double distance = distance = tableCoordonnees[0].distance(tableCoordonnees[1]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[1]);;
+        switch(nbContournement){
+            case 0 :
+                distance = contournement0();
+                break;
+            case 1 :
+                distance = contournement1(distance);
+                break;
+            case 2 :
+                distance = contournement2(distance);
+                break;
+        }
+        return distance;
+    }
+
+    private double contournement0() {
+        return tableCoordonnees[0].distance(tableCoordonnees[NB_COORDONNEE - 1]);
+    }
+
+    private double contournement1(double distance) {
         for (int i = 0; i < NB_COORDONNEE; i++) {
-            if(nbContournement == 1 && distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i])){
+            if (distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i])) {
                 distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i]);
-            }else if(nbContournement == 2){
-                for (int j = 0; j < NB_COORDONNEE; j++) {
-                    if (nbContournement == 1 && distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j])) {
-                        distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j]);
-                    }
+            }
+        }
+        return distance;
+    }
+
+    private double contournement2(double distance) {        
+        for (int i = 0; i < NB_COORDONNEE; i++) {
+            for (int j = 0; j < NB_COORDONNEE; j++) {
+                if (distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j])) {
+                    distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j]);
                 }
             }
         }
-        
         return distance;
     }
 

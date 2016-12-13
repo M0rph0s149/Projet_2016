@@ -137,7 +137,7 @@ public class TraitementVol {
 
     public static void distanceContournement() {
         System.out.println("\nCombien de points de contournement?");
-        int nbContournement = Utilitaires.lireUnEntierComprisEntre(1, 2);
+        int nbContournement = Utilitaires.lireUnEntierComprisEntre(0, 2);
         System.out.println("\nLa distance totale parcourue avec contournements est de " + vol.distanceContournement(nbContournement));
     }
 
