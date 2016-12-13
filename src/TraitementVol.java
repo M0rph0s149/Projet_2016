@@ -43,7 +43,7 @@ public class TraitementVol {
                     nbCiblesAtteintes();
                     break;
                 case 9:
-                    statistique9();
+                    nbCibleAtteintesLorsParcours();
                     break;
                 case 10:
                     distanceMoyenne();
@@ -73,10 +73,10 @@ public class TraitementVol {
     }
 
     public static Coordonnees lireCoordonnees() {									//METHODE NON TESTEE
-        System.out.println("Quelle longitude?\nLongitude:");
+        System.out.print("Quelle longitude?\nLongitude:");
         long longitude = scanner.nextLong();
 
-        System.out.println("Quelle latitude?\nLatitude:");
+        System.out.print("Quelle latitude?\nLatitude:");
         long latitude = scanner.nextLong();
 
         return new Coordonnees(latitude, longitude);
@@ -95,7 +95,7 @@ public class TraitementVol {
 
         Coordonnees[] parcours = new Coordonnees[nombreCoordonnees];
 
-        System.out.println("Voulez-vous inscrire une coordonnee ? ");
+        System.out.print("Voulez-vous inscrire une coordonnee ? ");
         char reponse = Utilitaires.lireOouN();
         
         while (compteurCoordonnees < parcours.length && reponse == 'O') {
@@ -120,10 +120,10 @@ public class TraitementVol {
     }
 
     public static void extremeCoordonnees() {
-        System.out.println("\nLes coordonnees du lieu le plus au nord sont :\n" + vol.extremeCoordonnees()[0].toString());
-        System.out.println("\nLes coordonnees du lieu le plus au sud sont :\n" + vol.extremeCoordonnees()[1].toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'ouest sont :\n" + vol.extremeCoordonnees()[2].toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'est sont :\n" + vol.extremeCoordonnees()[3].toString());
+        System.out.println("\nLes coordonnees du lieu le plus au nord est :\n" + vol.extremeCoordonnees()[0].toString());
+        System.out.println("\nLes coordonnees du lieu le plus au sud est :\n" + vol.extremeCoordonnees()[1].toString());
+        System.out.println("\nLes coordonnees du lieu le plus a l'ouest est :\n" + vol.extremeCoordonnees()[2].toString());
+        System.out.println("\nLes coordonnees du lieu le plus a l'est est :\n" + vol.extremeCoordonnees()[3].toString());
     }
 
     public static void distancePlusProcheCible() {
@@ -150,8 +150,9 @@ public class TraitementVol {
         System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCiblesAtteintes(creerParcours()));
     }
 
-    public static void statistique9() {
-        // A COMPLETER
+    public static void nbCibleAtteintesLorsParcours() {
+        System.out.println("\nRentrez les coordonnees de cibles à atteindre.");
+        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCibleAtteintesLorsParcours(creerParcours()));
     }
 
     public static void distanceMoyenne() {

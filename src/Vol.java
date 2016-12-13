@@ -181,17 +181,20 @@ public class Vol {
      * contournements
      */
     public double distanceContournement(int nbContournement) {
-        int ecart = NB_COORDONNEE / nbContournement + 1;
-        int cpt = 0;
-        double distance = 0;
-        for (int i = 0; i < nbContournement; i++) {
-            if (cpt + ecart > NB_COORDONNEE) {
-                distance += tableCoordonnees[cpt].distance(tableCoordonnees[NB_COORDONNEE - 1]);
-                break;
+        
+        double distance = distance = tableCoordonnees[0].distance(tableCoordonnees[1]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[1]);;
+        for (int i = 0; i < NB_COORDONNEE; i++) {
+            if(nbContournement == 1 && distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i])){
+                distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i]);
+            }else if(nbContournement == 2){
+                for (int j = 0; j < NB_COORDONNEE; j++) {
+                    if (nbContournement == 1 && distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j])) {
+                        distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j]);
+                    }
+                }
             }
-            distance += tableCoordonnees[cpt].distance(tableCoordonnees[cpt + ecart]);
-            cpt += ecart;
         }
+        
         return distance;
     }
 
@@ -204,23 +207,31 @@ public class Vol {
         int cpt = 0;
 
         for (int i = 0; i < NB_COORDONNEE; i++) {
-            for (int j = 3; j < NB_COORDONNEE; j++) {
-                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j + 1])) {
+            for(int j = i + 2; j < NB_COORDONNEE - 1; j ++){
+                if(Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j + 1])){
                     cpt ++;
+                    if(Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j])){
+                        cpt --;
+                    } else if(Coordonnees.segmentsCroises(tableCoordonnees[i + 1], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j + 1])){
+                        cpt --;
+                    }
                 }
             }
         }
-////        if (tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE - 1])) {
-////            cpt++;
-////        }
+        
+        
+        
+//        if (tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE - 1])) {
+//            cpt++;
+//        }
 //        for (int i = 0; i < NB_COORDONNEE; i++) {
 //            for (int j = i + 1; j < NB_COORDONNEE; j++) {
 //                if (tableCoordonnees[j].equals(tableCoordonnees[i])) {
 //                    cpt++;
 //                }
-////                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])) {
-////                    cpt++;
-////                }
+//                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])) {
+//                    cpt++;
+//                }
 //            }
 //        }
 
@@ -249,8 +260,11 @@ public class Vol {
     public int nbCiblesAtteintes(Coordonnees[] cibles) {
         int cpt = 0;
         for (Coordonnees cible : cibles) {
-            for (Coordonnees tableCoordonnee : tableCoordonnees) {
-                if (tableCoordonnee.equals(cible)) {
+            for (int i = 0; i < NB_COORDONNEE; i ++) {
+                if (tableCoordonnees[i].equals(cible)) {
+                    cpt++;
+                    break;
+                }else if(i  <= NB_COORDONNEE - 1 && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], cible, cible)){
                     cpt++;
                     break;
                 }
@@ -263,8 +277,11 @@ public class Vol {
         int cpt = 0;
         int cpt2 = 0;
         for (Coordonnees coordonnees : ParcoursImpose) {
-            for (Coordonnees tableCoordonnee : tableCoordonnees) {
-                if(tableCoordonnee.equals(coordonnees)) {
+            for (int i = 0; i < NB_COORDONNEE; i ++) {
+                if(tableCoordonnees[i].equals(coordonnees)) {
+                    cpt++;
+                    break;
+                }else if(i  <= NB_COORDONNEE - 1 && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], coordonnees, coordonnees)){
                     cpt++;
                     break;
                 }
