@@ -185,12 +185,12 @@ public class Vol {
         int cpt = 0;
         double distance = 0;
         for (int i = 0; i < nbContournement; i++) {
-            distance += tableCoordonnees[cpt].distance(tableCoordonnees[cpt + ecart]);
-            cpt += ecart;
             if (cpt + ecart > NB_COORDONNEE) {
                 distance += tableCoordonnees[cpt].distance(tableCoordonnees[NB_COORDONNEE - 1]);
                 break;
             }
+            distance += tableCoordonnees[cpt].distance(tableCoordonnees[cpt + ecart]);
+            cpt += ecart;
         }
         return distance;
     }
@@ -202,19 +202,41 @@ public class Vol {
      */
     public int nbCroisement() {
         int cpt = 0;
-        if (tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE - 1])) {
-            cpt++;
-        }
+
         for (int i = 0; i < NB_COORDONNEE; i++) {
-            for (int j = 0; j < NB_COORDONNEE; j++) {
-                if (tableCoordonnees[j].equals(tableCoordonnees[i])) {
-                    cpt++;
-                }
-                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])) {
-                    cpt++;
+            for (int j = 3; j < NB_COORDONNEE; j++) {
+                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j + 1])) {
+                    cpt ++;
                 }
             }
         }
+////        if (tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE - 1])) {
+////            cpt++;
+////        }
+//        for (int i = 0; i < NB_COORDONNEE; i++) {
+//            for (int j = i + 1; j < NB_COORDONNEE; j++) {
+//                if (tableCoordonnees[j].equals(tableCoordonnees[i])) {
+//                    cpt++;
+//                }
+////                if (j + 1 != NB_COORDONNEE && i + 1 != NB_COORDONNEE && Coordonnees.segmentsCroises(tableCoordonnees[j], tableCoordonnees[j + 1], tableCoordonnees[i], tableCoordonnees[i + 1])) {
+////                    cpt++;
+////                }
+//            }
+//        }
+
+
+//        for (int i = 1; i < NB_COORDONNEE; i++) {
+//            for(int j = 0; j < i; j++) {
+//                if(tableCoordonnees[i].equals(tableCoordonnees[j]))
+//                    cpt++;
+//                if(j > 0 && tableCoordonnees[i] != tableCoordonnees[j] && tableCoordonnees[i] != tableCoordonnees[j-1] && tableCoordonnees[i-1] != tableCoordonnees[j] && tableCoordonnees[i-1] != tableCoordonnees[j-1])
+//                if(j > 0 && j + 1 < i && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i-1], tableCoordonnees[j], tableCoordonnees[j-1]))
+//                    cpt++;
+//            }
+//        }
+//        if(tableCoordonnees[0].equals(tableCoordonnees[NB_COORDONNEE-1])){
+//            cpt ++;
+//        }
         return cpt;
     }
 
@@ -238,8 +260,21 @@ public class Vol {
     }
 
     public int nbCibleAtteintesLorsParcours(Coordonnees[] ParcoursImpose) {
-        //elle devra à nouveau être survolée ? Exliquation ?
-        return 0;
+        int cpt = 0;
+        int cpt2 = 0;
+        for (Coordonnees coordonnees : ParcoursImpose) {
+            for (Coordonnees tableCoordonnee : tableCoordonnees) {
+                if(tableCoordonnee.equals(coordonnees)) {
+                    cpt++;
+                    break;
+                }
+            }
+            cpt2++;
+            if(cpt != cpt2){
+                return cpt;
+            }
+        }
+        return cpt;
     }
 
     /**
