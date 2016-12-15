@@ -1,3 +1,4 @@
+
 /**
  * Dossier algo Programme principal a completer
  *
@@ -97,7 +98,7 @@ public class TraitementVol {
 
         System.out.print("Voulez-vous inscrire une coordonnee ? ");
         char reponse = Utilitaires.lireOouN();
-        
+
         while (compteurCoordonnees < parcours.length && reponse == 'O') {
             parcours[compteurCoordonnees] = lireCoordonnees();
             compteurCoordonnees++;
@@ -120,10 +121,11 @@ public class TraitementVol {
     }
 
     public static void extremeCoordonnees() {
-        System.out.println("\nLes coordonnees du lieu le plus au nord est :\n" + vol.extremeCoordonnees()[0].toString());
-        System.out.println("\nLes coordonnees du lieu le plus au sud est :\n" + vol.extremeCoordonnees()[1].toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'ouest est :\n" + vol.extremeCoordonnees()[2].toString());
-        System.out.println("\nLes coordonnees du lieu le plus a l'est est :\n" + vol.extremeCoordonnees()[3].toString());
+        int NB_EXTREMES = 4;
+        String[] extremes = {"au Nord", "au Sud", "à l'Ouest", "à l'Est"};
+        for (int i = 0; i < NB_EXTREMES; i++) {
+            System.out.println("\nLes coordonnées du lieu le plus " + extremes[i] + " sont: \n" + vol.extremeCoordonnees()[i].toString());
+        }
     }
 
     public static void distancePlusProcheCible() {

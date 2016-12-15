@@ -57,12 +57,9 @@ public class Vol {
     public Coordonnees distanceMaximalePointDepart() {
         double distanceMaximale = 0;
         Coordonnees coordonneeMax = null;
-        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
-            double distance = this.tableCoordonnees[i].distance(this.tableCoordonnees[0]);
-            
-            if (distance > distanceMaximale) {
-                distanceMaximale = distance;
+            if (tableCoordonnees[i].distance(this.tableCoordonnees[0]) > distanceMaximale) {
+                distanceMaximale = tableCoordonnees[i].distance(this.tableCoordonnees[0]);
                 coordonneeMax = this.tableCoordonnees[i];
             }
         }
@@ -70,95 +67,70 @@ public class Vol {
     }
 
     /**
-     * Calcul les 4 coordonnées cardinales les plus extremes
+     * Calcul les 4 coordonn?es cardinales les plus extremes
      *
      * @return List contenant les 4 Coordonnees cardinales les plus extremes
      */
     public Coordonnees[] extremeCoordonnees() {
         Coordonnees[] reponse = new Coordonnees[4];
-        
-        reponse[0] = extremeNord();
-        reponse[1] = extremeSud();
-        reponse[2] = extremeOuest();
-        reponse[3] = extremeEst();
+
+        reponse[0] = extremeNordEtSud()[0];
+        reponse[1] = extremeNordEtSud()[1];
+        reponse[2] = extremeOuestEtEst()[0];
+        reponse[3] = extremeOuestEtEst()[1];
 
         return reponse;
     }
 
     /**
-     * Calcul la coordonnée cardinale la plus au Nord
+     * Calcul les coordonn?es cardinales les plus au Nord et au Sud
      *
-     * @return La Coordonnees la plus au Nord
+     * @return un tableau contenant les Coordonnees les plus au Nord et au Sud
      */
-    private Coordonnees extremeNord() {
+    private Coordonnees[] extremeNordEtSud() {
         long latitudeMax = 0;
+        long latitudeMin = 0;
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
-        
+        Coordonnees coordonneeMin = this.tableCoordonnees[0];
+
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
-            
+            if (this.tableCoordonnees[i].getLatitude() < latitudeMin) {
+                latitudeMin = this.tableCoordonnees[i].getLatitude();
+                coordonneeMin = this.tableCoordonnees[i];
+            }
             if (this.tableCoordonnees[i].getLatitude() > latitudeMax) {
                 latitudeMax = this.tableCoordonnees[i].getLatitude();
                 coordonneeMax = this.tableCoordonnees[i];
             }
         }
-        return coordonneeMax;
+        Coordonnees[] extremesNordEtSud = {coordonneeMax, coordonneeMin};
+        return extremesNordEtSud;
     }
 
     /**
-     * Calcul la coordonnée cardinale la plus au Sud
+     * Calcul les coordonn?es cardinales les plus à l'Ouest et à l'Est
      *
-     * @return La Coordonnees la plus au Sd
+     * @return un tableau contenant les Coordonnees les plus à l'Ouest et à
+     * l'Est
      */
-    private Coordonnees extremeSud() {
-        long latitudeMin = 0;
-        Coordonnees coordonneeMin = this.tableCoordonnees[0];
-        
-        for (int i = 1; i < this.NB_COORDONNEE; i++) {
-            
-            if (this.tableCoordonnees[i].getLatitude() < latitudeMin) {
-                latitudeMin = this.tableCoordonnees[i].getLatitude();
-                coordonneeMin = this.tableCoordonnees[i];
-            }
-        }
-        return coordonneeMin;
-    }
-
-    /**
-     * Calcul la coordonnée cardinale la plus à l'Ouest
-     *
-     * @return La Coordonnees la plus à l'Ouest
-     */
-    private Coordonnees extremeOuest() {
+    private Coordonnees[] extremeOuestEtEst() {
         long longitudeMin = 0;
+        long longitudeMax = 0;
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
-        
+        Coordonnees coordonneeMax = this.tableCoordonnees[0];
+
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
-            
             if (this.tableCoordonnees[i].getLongitude() < longitudeMin) {
                 longitudeMin = this.tableCoordonnees[i].getLongitude();
                 coordonneeMin = this.tableCoordonnees[i];
             }
-        }
-        return coordonneeMin;
-    }
-
-    /**
-     * Calcul la coordonnée cardinale la plus à l'Est
-     *
-     * @return La Coordonnees la plus à l'Est
-     */
-    private Coordonnees extremeEst() {
-        long longitudeMax = 0;
-        Coordonnees coordonneeMax = this.tableCoordonnees[0];
-        
-        for (int i = 1; i < this.NB_COORDONNEE; i++) {
-            
             if (this.tableCoordonnees[i].getLongitude() > longitudeMax) {
                 longitudeMax = this.tableCoordonnees[i].getLongitude();
                 coordonneeMax = this.tableCoordonnees[i];
             }
         }
-        return coordonneeMax;
+        Coordonnees[] extremesOuestEtEst = {coordonneeMin, coordonneeMax};
+        return extremesOuestEtEst;
     }
 
     /**
@@ -169,14 +141,14 @@ public class Vol {
      */
     public Coordonnees distancePlusProcheCible(Coordonnees cible) {
         if (cible == null) {
-            throw new IllegalArgumentException("cible est null, ne peut-être null !");
+            throw new IllegalArgumentException("cible est null, ne peut -être null !");
         }
 
         double distanceMin = cible.distance(tableCoordonnees[0]);
         Coordonnees coordonneesMin = tableCoordonnees[0];
-        
+
         for (int i = 1; i < NB_COORDONNEE; i++) {
-            
+
             if (cible.distance(tableCoordonnees[i]) < distanceMin) {
                 distanceMin = cible.distance(tableCoordonnees[i]);
                 coordonneesMin = tableCoordonnees[i];
@@ -192,7 +164,7 @@ public class Vol {
      */
     public double distanceTotale() {
         double distance = 0;
-        
+
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
             distance += this.tableCoordonnees[i - 1].distance(tableCoordonnees[i]);
         }
@@ -203,7 +175,8 @@ public class Vol {
      * Calcul la distance maximale du vol en passant par des points de
      * contournements
      *
-     * @param nbContournement Nombre de points de contournements
+     * @param nbContournement Nombre de points de contournements (compris entre
+     * 0 et 2 inclus)
      * @return L'addition totale de l'espace entre chaque points de
      * contournements
      */
@@ -211,32 +184,41 @@ public class Vol {
         if (nbContournement < 0 || nbContournement > 2) {
             throw new IllegalArgumentException("nbContournement n'est pas compris entre 0 et 2 inclus !");
         }
-
-        double distance = tableCoordonnees[0].distance(tableCoordonnees[1]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[1]);
+        double distance = 0;
 
         switch (nbContournement) {
             case 0:
                 distance = contournement0();
                 break;
             case 1:
-                distance = contournement1(distance);
+                distance = contournement1();
                 break;
             case 2:
-                distance = contournement2(distance);
+                distance = contournement2();
                 break;
         }
         return distance;
     }
 
+    /**
+     * Calcul la distance entre le point de d?part et le point final a vol
+     * d'oiseau
+     *
+     * @return La distance entre le point de d?part et le point final
+     */
     private double contournement0() {
         return tableCoordonnees[0].distance(tableCoordonnees[NB_COORDONNEE - 1]);
     }
 
-    private double contournement1(double distance) {
-        if (distance < 0) {
-            throw new IllegalArgumentException("distance ne peut pas être négatif !");
-        }
-        
+    /**
+     * Calcul la distance maximale du vol en passant par un point de
+     * contournement
+     *
+     * @return l'addition totale de l'espace entre le point de depart, le point
+     * final et le point de contournement
+     */
+    private double contournement1() {
+        double distance = 0;
         for (int i = 0; i < NB_COORDONNEE; i++) {
             if (distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i])) {
                 distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i]);
@@ -245,13 +227,17 @@ public class Vol {
         return distance;
     }
 
-    private double contournement2(double distance) {
-        if (distance < 0) {
-            throw new IllegalArgumentException("distance ne peut pas être négatif !");
-        }
-        
+    /**
+     * Calcul la distance maximale du vol en passant par deux points de
+     * contournements
+     *
+     * @return l'addition totale de l'espace entre le point de depart, le point
+     * final et les deux points de contournement
+     */
+    private double contournement2() {
+        double distance = 0;
         for (int i = 0; i < NB_COORDONNEE; i++) {
-            for (int j = 0; j < NB_COORDONNEE; j++) {
+            for (int j = i + 1; j < NB_COORDONNEE; j++) {
                 if (distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j])) {
                     distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j]);
                 }
@@ -286,14 +272,16 @@ public class Vol {
     /**
      * Calcul le nombre de cibles atteintes lors du parcours
      *
-     * @param cibles Tableau contenant les cibles à atteindre
-     * @return Le nombre de cibles atteintes
+     * @param cibles Liste de cibles sans doublonTableau contenant les cibles à
+     * atteindre
+     * @return Le nombre de cibles atteintes parmi lespoints de 'cibles',une
+     * cible atteinte plusieurs fois n'est comptée qu'une fois
      */
     public int nbCiblesAtteintes(Coordonnees[] cibles) {
-        if (cibles  == null) {
-            throw new IllegalArgumentException("cibles est nul, ne peu-être null ! !");
+        if (cibles == null) {
+            throw new IllegalArgumentException("cibles est nul, ne peu-être null !");
         }
-        
+
         int cpt = 0;
         for (Coordonnees cible : cibles) {
             for (int i = 0; i < NB_COORDONNEE; i++) {
@@ -309,11 +297,17 @@ public class Vol {
         return cpt;
     }
 
+    /**
+     * 
+     * 
+     * @param ParcoursImpose
+     * @return
+     */
     public int nbCibleAtteintesLorsParcours(Coordonnees[] ParcoursImpose) {
-        if (ParcoursImpose  == null) {
-            throw new IllegalArgumentException("ParcoursImpose est nul, ne peu-être null ! !");
+        if (ParcoursImpose == null) {
+            throw new IllegalArgumentException("ParcoursImpose est nul, ne peu-être null !");
         }
-        
+
         int cpt = 0;
         int cpt2 = 0;
         for (Coordonnees coordonnees : ParcoursImpose) {
