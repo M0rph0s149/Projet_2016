@@ -41,7 +41,7 @@ public class TraitementVol {
                     nbCroisement();
                     break;
                 case 8:
-                    nbCiblesAtteintes();
+                    ciblesAtteintes();
                     break;
                 case 9:
                     nbCibleAtteintesLorsParcours();
@@ -147,9 +147,10 @@ public class TraitementVol {
         System.out.println("\nLe nombre de croisements lors du parcours est de " + vol.nbCroisement());
     }
 
-    public static void nbCiblesAtteintes() {
+    public static void ciblesAtteintes() {
         System.out.println("\nRentrez les coordonnees de cibles à atteindre.");
-        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCiblesAtteintes(creerParcours()));
+        System.out.println("\nLes cibles atteintes sont: ");
+        afficherParcours(vol.ciblesAtteintes(creerParcours()));
     }
 
     public static void nbCibleAtteintesLorsParcours() {

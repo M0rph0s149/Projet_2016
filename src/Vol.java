@@ -1,4 +1,8 @@
 
+import java.util.ArrayList;
+import java.util.Vector;
+
+
 /**
  * Projet algo
  *
@@ -277,24 +281,33 @@ public class Vol {
      * @return Le nombre de cibles atteintes parmi lespoints de 'cibles',une
      * cible atteinte plusieurs fois n'est comptée qu'une fois
      */
-    public int nbCiblesAtteintes(Coordonnees[] cibles) {
+    public Coordonnees[] ciblesAtteintes(Coordonnees[] cibles) {
         if (cibles == null) {
             throw new IllegalArgumentException("cibles est nul, ne peu-être null !");
         }
+        
+        ArrayList<Coordonnees> atteint = new ArrayList();
 
         int cpt = 0;
         for (Coordonnees cible : cibles) {
             for (int i = 0; i < NB_COORDONNEE; i++) {
                 if (tableCoordonnees[i].equals(cible)) {
-                    cpt++;
+                    atteint.add(tableCoordonnees[i]);
                     break;
                 } else if (i <= NB_COORDONNEE - 1 && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], cible, cible)) {
-                    cpt++;
+                    atteint.add(tableCoordonnees[i]);
                     break;
                 }
             }
         }
-        return cpt;
+        
+        Coordonnees[] tabAtteinte = new Coordonnees[atteint.size()];
+        
+        for (int i = 0; i < atteint.size(); i++) {
+            tabAtteinte[i] = atteint.get(i);
+        }
+        
+        return tabAtteinte;
     }
 
     /**
