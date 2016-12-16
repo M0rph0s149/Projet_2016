@@ -55,7 +55,7 @@ public class Vol {
      *
      * @return La Coordonnees la plus éloignée du point de départ
      */
-    public Coordonnees lieuxLePLusDuPointDepart() {
+    public Coordonnees lieuxLePLusEloigneDuPointDepart() {
         double distanceMaximale = 0;
         Coordonnees coordonneeMax = null;
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
@@ -68,11 +68,11 @@ public class Vol {
     }
 
     /**
-     * Calcul les 4 coordonn?es cardinales les plus extremes
+     * Calcul les 4 coordonnées cardinales les plus extremes
      *
      * @return List contenant les 4 Coordonnees cardinales les plus extremes
      */
-    public Coordonnees[] extremeCoordonnees() {
+    public Coordonnees[] coordonneesExtreme() {
         Coordonnees[] reponse = new Coordonnees[4];
 
         reponse[0] = extremeNordEtSud()[0];
@@ -140,7 +140,7 @@ public class Vol {
      * @param cible Coordonnees voulu pour rapprochement
      * @return Coodonnees la plus proche de la coordonnée cible
      */
-    public Coordonnees distancePlusProcheCible(Coordonnees cible) {
+    public Coordonnees lieuPlusProcheCible(Coordonnees cible) {
         if (cible == null) {
             throw new IllegalArgumentException("cible est null, ne peut -être null !");
         }
@@ -313,7 +313,7 @@ public class Vol {
      * @param ParcoursImpose
      * @return
      */
-    public int nbCibleAtteintesLorsParcours(Coordonnees[] ParcoursImpose) {
+    public int nbCibleAtteintesParcoursImpose(Coordonnees[] ParcoursImpose) {
         if (ParcoursImpose == null) {
             throw new IllegalArgumentException("ParcoursImpose est nul, ne peu-être null !");
         }

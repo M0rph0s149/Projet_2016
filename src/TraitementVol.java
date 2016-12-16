@@ -23,13 +23,13 @@ public class TraitementVol {
                     duree();
                     break;
                 case 2:
-                    lieuxLePLusDuPointDepart();
+                    lieuxLePLusEloigneDuPointDepart();
                     break;
                 case 3:
-                    extremeCoordonnees();
+                    coordonneesExtreme();
                     break;
                 case 4:
-                    distancePlusProcheCible();
+                    lieuPlusProcheCible();
                     break;
                 case 5:
                     distanceTotale();
@@ -44,7 +44,7 @@ public class TraitementVol {
                     ciblesAtteintes();
                     break;
                 case 9:
-                    nbCibleAtteintesLorsParcours();
+                    nbCibleAtteintesParcoursImpose();
                     break;
                 case 10:
                     distanceMoyenne();
@@ -116,21 +116,21 @@ public class TraitementVol {
         System.out.println("\nTon vol a dure " + vol.duree() + " unites temps.");
     }
 
-    public static void lieuxLePLusDuPointDepart() {
-        System.out.println("\nLa coordonnee du lieu le plus eloigne de votre point de départ sont :\n" + vol.lieuxLePLusDuPointDepart().toString());
+    public static void lieuxLePLusEloigneDuPointDepart() {
+        System.out.println("\nLa coordonnee du lieu le plus eloigne de votre point de départ sont :\n" + vol.lieuxLePLusEloigneDuPointDepart().toString());
     }
 
-    public static void extremeCoordonnees() {
+    public static void coordonneesExtreme() {
         int NB_EXTREMES = 4;
         String[] extremes = {"au Nord", "au Sud", "à l'Ouest", "à l'Est"};
         for (int i = 0; i < NB_EXTREMES; i++) {
-            System.out.println("\nLes coordonnées du lieu le plus " + extremes[i] + " sont: \n" + vol.extremeCoordonnees()[i].toString());
+            System.out.println("\nLes coordonnées du lieu le plus " + extremes[i] + " sont: \n" + vol.coordonneesExtreme()[i].toString());
         }
     }
 
-    public static void distancePlusProcheCible() {
+    public static void lieuPlusProcheCible() {
         System.out.println("\nVeuillez rentrer les coordonnees d'une cible a atteindre lors de votre parcours.");
-        System.out.println("Le point le plus proche d'une cible est aux coordonnees " + vol.distancePlusProcheCible(lireCoordonnees()).toString());
+        System.out.println("Le point le plus proche d'une cible est aux coordonnees " + vol.lieuPlusProcheCible(lireCoordonnees()).toString());
     }
 
     public static void distanceTotale() {
@@ -153,9 +153,9 @@ public class TraitementVol {
         afficherParcours(vol.ciblesAtteintes(creerParcours()));
     }
 
-    public static void nbCibleAtteintesLorsParcours() {
+    public static void nbCibleAtteintesParcoursImpose() {
         System.out.println("\nRentrez les coordonnees de cibles à atteindre.");
-        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCibleAtteintesLorsParcours(creerParcours()));
+        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCibleAtteintesParcoursImpose(creerParcours()));
     }
 
     public static void distanceMoyenne() {
