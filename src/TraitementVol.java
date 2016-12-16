@@ -23,7 +23,7 @@ public class TraitementVol {
                     duree();
                     break;
                 case 2:
-                    distanceMaximalePointDepart();
+                    lieuxLePLusDuPointDepart();
                     break;
                 case 3:
                     extremeCoordonnees();
@@ -116,8 +116,8 @@ public class TraitementVol {
         System.out.println("\nTon vol a dure " + vol.duree() + " unites temps.");
     }
 
-    public static void distanceMaximalePointDepart() {
-        System.out.println("\nLes coordonnees du lieu le plus eloigne de ton point de depart sont :\n" + vol.distanceMaximalePointDepart().toString());
+    public static void lieuxLePLusDuPointDepart() {
+        System.out.println("\nLa coordonnee du lieu le plus eloigne de votre point de départ sont :\n" + vol.lieuxLePLusDuPointDepart().toString());
     }
 
     public static void extremeCoordonnees() {

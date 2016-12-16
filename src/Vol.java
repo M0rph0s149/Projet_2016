@@ -1,7 +1,4 @@
-
 import java.util.ArrayList;
-import java.util.Vector;
-
 
 /**
  * Projet algo
@@ -58,7 +55,7 @@ public class Vol {
      *
      * @return La Coordonnees la plus éloignée du point de départ
      */
-    public Coordonnees distanceMaximalePointDepart() {
+    public Coordonnees lieuxLePLusDuPointDepart() {
         double distanceMaximale = 0;
         Coordonnees coordonneeMax = null;
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
