@@ -90,7 +90,7 @@ public class TraitementVol {
     }
 
     public static Coordonnees[] creerParcours() {									//METHODE NON TESTEE  (Afficher coordonnees du tableau)
-        System.out.print("Combien de coordonnees voulez-vous ajouter ?\nNombre de coordonnees: ");
+        System.out.print("Combien de coordonnees voulez-vous ajouter ? ");
         int nombreCoordonnees = Utilitaires.lireUnEntierStrictementPositif();
         int compteurCoordonnees = 0;
 
@@ -148,14 +148,14 @@ public class TraitementVol {
     }
 
     public static void ciblesAtteintes() {
-        System.out.println("\nRentrez les coordonnees de cibles à atteindre.");
+        Coordonnees[] parcours = creerParcours();
         System.out.println("\nLes cibles atteintes sont: ");
-        afficherParcours(vol.ciblesAtteintes(creerParcours()));
+        afficherParcours(vol.ciblesAtteintes(parcours));
     }
 
     public static void nbCibleAtteintesParcoursImpose() {
-        System.out.println("\nRentrez les coordonnees de cibles à atteindre.");
-        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCibleAtteintesParcoursImpose(creerParcours()));
+        Coordonnees[] parcours = creerParcours();
+        System.out.println("\nLe nombre de cibles atteintes est de " + vol.nbCibleAtteintesParcoursImpose(parcours));
     }
 
     public static void distanceMoyenne() {

@@ -23,6 +23,10 @@ public class Vol {
      * @param pilote Nom du pilote
      * @param tableCoordonnees Table de coordonnées par lesquelles le vol est
      * passé
+     * @throws IllegalArgumentException Si date est null
+     * @throws IllegalArgumentException Si pilote est null
+     * @throws IllegalArgumentException Si tableCoordonnees contient au moins un
+     * élément null
      */
     public Vol(Date date, String pilote, Coordonnees[] tableCoordonnees) {
         if (date == null) {
@@ -31,8 +35,11 @@ public class Vol {
         if (pilote == null) {
             throw new IllegalArgumentException("pilote est null, ne peut-être null !");
         }
-        if (tableCoordonnees == null) {
-            throw new IllegalArgumentException("tableCoordonnees est null, ne peut-être null !");
+
+        for (Coordonnees coordonnees : tableCoordonnees) {
+            if(coordonnees == null){
+                throw new IllegalArgumentException("tableCoordonnees contient au moins un élément null !");
+            }
         }
         this.date = date;
         this.pilote = pilote;
@@ -41,17 +48,18 @@ public class Vol {
     }
 
     /**
-     * Cette methode renvoie la duree du vol Une unite de temps correspond au
-     * temps ecoule entre 2 mesures de position du gps
+     * Calcul la durée du vol, une unité de temps correspond au
+     * temps écoulé entre 2 mesures de position du gps
      *
-     * @return la duree de voyage entre deux coordonnées
+     * @return La durée de voyage entre deux coordonnées
      */
     public int duree() {
         return this.NB_COORDONNEE - 1;
     }
 
     /**
-     * Calcul la coordonnée enregistrée le plus éloignée du point de départ
+     * Calcule la coordonnée enregistrée le plus éloignée du point de départ.
+     * En cas d'ex-aequos, c'est la premiére coordonnée qui sera renvoyée
      *
      * @return La Coordonnees la plus éloignée du point de départ
      */
@@ -68,9 +76,9 @@ public class Vol {
     }
 
     /**
-     * Calcul les 4 coordonnées cardinales les plus extremes
+     * Calcule les 4 coordonnées cardinales les plus extrêmes.
      *
-     * @return List contenant les 4 Coordonnees cardinales les plus extremes
+     * @return Un tableau contenant les 4 coordonnées cardinales les plus extrêmes
      */
     public Coordonnees[] coordonneesExtreme() {
         Coordonnees[] reponse = new Coordonnees[4];
@@ -84,9 +92,9 @@ public class Vol {
     }
 
     /**
-     * Calcul les coordonn?es cardinales les plus au Nord et au Sud
+     * Calcule les coordonnées cardinales les plus au Nord et au Sud
      *
-     * @return un tableau contenant les Coordonnees les plus au Nord et au Sud
+     * @return Un tableau contenant les coordonnées les plus au Nord et au Sud
      */
     private Coordonnees[] extremeNordEtSud() {
         long latitudeMax = 0;
@@ -109,9 +117,9 @@ public class Vol {
     }
 
     /**
-     * Calcul les coordonn?es cardinales les plus à l'Ouest et à l'Est
+     * Calcule les coordonnées cardinales les plus à l'Ouest et à l'Est
      *
-     * @return un tableau contenant les Coordonnees les plus à l'Ouest et à
+     * @return Un tableau contenant les coordonnées les plus à l'Ouest et à
      * l'Est
      */
     private Coordonnees[] extremeOuestEtEst() {
@@ -135,10 +143,12 @@ public class Vol {
     }
 
     /**
-     * Calcul la coordonnée la plus proche d'une cible définie
+     * Calcule la coordonnée la plus proche d'une cible définie.
+     * En cas d?ex-aequos, c?est la première coordonnée qui sera donnée.
      *
      * @param cible Coordonnees voulu pour rapprochement
      * @return Coodonnees la plus proche de la coordonnée cible
+     * @throws IllegalArgumentException Si cible est null
      */
     public Coordonnees lieuPlusProcheCible(Coordonnees cible) {
         if (cible == null) {
@@ -159,9 +169,9 @@ public class Vol {
     }
 
     /**
-     * Calcul la distance totale du vol
+     * Calcule la distance totale du vol
      *
-     * @return L'addition totale de l'espace entre chaque Coordonnees
+     * @return La somme totale de l'espace entre chaque coordonnées
      */
     public double distanceTotale() {
         double distance = 0;
@@ -173,13 +183,16 @@ public class Vol {
     }
 
     /**
-     * Calcul la distance maximale du vol en passant par des points de
-     * contournements
+     * Calcule la distance maximale du vol en passant par le point de départ,
+     * X points de contournements et l'arrivé. Les points de contournements sont
+     * déterminé dans un but de distance maximale.
      *
      * @param nbContournement Nombre de points de contournements (compris entre
      * 0 et 2 inclus)
-     * @return L'addition totale de l'espace entre chaque points de
-     * contournements
+     * 
+     * @return La somme totale de l'espace entre chaque points de contournements
+     * @throws IllegalArgumentException Si nbContournement n'est pas compri
+     * entre 0 et 2 inclus
      */
     public double distanceContournement(int nbContournement) {
         if (nbContournement < 0 || nbContournement > 2) {
@@ -202,21 +215,22 @@ public class Vol {
     }
 
     /**
-     * Calcul la distance entre le point de d?part et le point final a vol
-     * d'oiseau
+     * Calcule la distance maximale du vol en passant par le point de départ,
+     * aucun points de contournements et l'arrivé.
      *
-     * @return La distance entre le point de d?part et le point final
+     * @return La distance entre le point de départ et le point final
      */
     private double contournement0() {
         return tableCoordonnees[0].distance(tableCoordonnees[NB_COORDONNEE - 1]);
     }
 
     /**
-     * Calcul la distance maximale du vol en passant par un point de
-     * contournement
+     * Calcule la distance maximale du vol en passant par le point de départ,
+     * 1 point de contournement et l'arrivé. Le point de contournement est
+     * déterminé dans un but de distance maximale.
      *
      * @return l'addition totale de l'espace entre le point de depart, le point
-     * final et le point de contournement
+     * de contournement et le point final.
      */
     private double contournement1() {
         double distance = 0;
@@ -229,11 +243,12 @@ public class Vol {
     }
 
     /**
-     * Calcul la distance maximale du vol en passant par deux points de
-     * contournements
+     * Calcule la distance maximale du vol en passant par le point de départ,
+     * s points de contournements et l'arrivé. Les points de contournements sont
+     * déterminé dans un but de distance maximale.
      *
-     * @return l'addition totale de l'espace entre le point de depart, le point
-     * final et les deux points de contournement
+     * @return La somme totale de l'espace entre le point de deéart, les deux
+     * points de contournements et le point d'arrivé
      */
     private double contournement2() {
         double distance = 0;
@@ -248,7 +263,9 @@ public class Vol {
     }
 
     /**
-     * Calcul le nombre de croisements lors du parcours
+     * Calcule le nombre de croisements lors du parcours. Les croisement sont
+     * soit des segments qui se croisent ou deux coordonnées se superposant tel
+     * que le départ et l'arrivé.
      *
      * @return Le nombre de croisements
      */
@@ -261,7 +278,7 @@ public class Vol {
                     cpt++;
                     if (Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j])) {
                         cpt--;
-                    } else if (Coordonnees.segmentsCroises(tableCoordonnees[i + 1], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j + 1])) {
+                    }else if (Coordonnees.segmentsCroises(tableCoordonnees[i + 1], tableCoordonnees[i + 1], tableCoordonnees[j], tableCoordonnees[j + 1])) {
                         cpt--;
                     }
                 }
@@ -271,28 +288,32 @@ public class Vol {
     }
 
     /**
-     * Calcul le nombre de cibles atteintes lors du parcours
+     * Cherche les coordonnées atteintes lors du parcours parmi un tableau de
+     * Coordonnees données. L'ordre des cibles n'a pas d'importance ainsi que
+     * leur affichage.
      *
-     * @param cibles Liste de cibles sans doublonTableau contenant les cibles à
-     * atteindre
-     * @return Le nombre de cibles atteintes parmi lespoints de 'cibles',une
-     * cible atteinte plusieurs fois n'est comptée qu'une fois
+     * @param cibles Tableau de Coordonnees sans doublon.
+     * @return Le nombre de cibles atteintes parmi les cibles données,une
+     * cible atteinte plusieurs fois n'est comptée qu'une fois.
+     * @throws IllegalArgumentException Si cibles contient au moins un élément
+     * null
      */
     public Coordonnees[] ciblesAtteintes(Coordonnees[] cibles) {
-        if (cibles == null) {
-            throw new IllegalArgumentException("cibles est nul, ne peu-être null !");
+        for (Coordonnees cible : cibles) {
+            if(cible == null){
+                throw new IllegalArgumentException("cibles contient au moins un élément null !");
+            }
         }
         
         ArrayList<Coordonnees> atteint = new ArrayList();
 
-        int cpt = 0;
         for (Coordonnees cible : cibles) {
-            for (int i = 0; i < NB_COORDONNEE; i++) {
+            for (int i = 0; i < NB_COORDONNEE - 1; i++) {
                 if (tableCoordonnees[i].equals(cible)) {
-                    atteint.add(tableCoordonnees[i]);
+                    atteint.add(cible);
                     break;
                 } else if (i <= NB_COORDONNEE - 1 && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], cible, cible)) {
-                    atteint.add(tableCoordonnees[i]);
+                    atteint.add(cible);
                     break;
                 }
             }
@@ -308,20 +329,29 @@ public class Vol {
     }
 
     /**
+     * Calcul le nombre de coordonnées atteintes lors d'un parcours imposé.
+     * L'ordre d'atteinte des coordonnées est importante. une coordonnées peut
+     * être comptée plusieurs fois. Si l'ordre n'est pas respecté, le programme
+     * retourne le nombre de cibles atteintes avant que le l'ordre ne fût
+     * perturbé.
      * 
-     * 
-     * @param ParcoursImpose
-     * @return
+     * @param parcoursImpose Tableau de Coordonnees, doublon autorisés.
+     * @return Le nombre de coordonnées atteintes, une coordonnées peut être
+     * survolée plusieurs fois.
+     * @throws IllegalArgumentException Si parcoursImpose contient au moins un
+     * élément null
      */
-    public int nbCibleAtteintesParcoursImpose(Coordonnees[] ParcoursImpose) {
-        if (ParcoursImpose == null) {
-            throw new IllegalArgumentException("ParcoursImpose est nul, ne peu-être null !");
+    public int nbCibleAtteintesParcoursImpose(Coordonnees[] parcoursImpose) {
+        for (Coordonnees cible : parcoursImpose) {
+            if(cible == null){
+                throw new IllegalArgumentException("parcoursImpose contient au moins un élément null !");
+            }
         }
 
         int cpt = 0;
         int cpt2 = 0;
-        for (Coordonnees coordonnees : ParcoursImpose) {
-            for (int i = 0; i < NB_COORDONNEE; i++) {
+        for (Coordonnees coordonnees : parcoursImpose) {
+            for (int i = 0; i < NB_COORDONNEE - 1; i++) {
                 if (tableCoordonnees[i].equals(coordonnees)) {
                     cpt++;
                     break;
@@ -339,17 +369,19 @@ public class Vol {
     }
 
     /**
-     * Calcul la distance moyenne entre chaque coordonnées du vol
+     * Calcule la distance moyenne entre chaque coordonnées du vol
      *
      * @return La distance moyenne entre chaque coordonnées du vol
      */
     public double distanceMoyenne() {
         double moyenne = 0;
         int cpt = 0;
+        
         for (int i = 0; i < tableCoordonnees.length - 1; i++) {
             moyenne += tableCoordonnees[i].distance(tableCoordonnees[i + 1]);
             cpt++;
         }
+        
         return moyenne /= cpt;
     }
 
