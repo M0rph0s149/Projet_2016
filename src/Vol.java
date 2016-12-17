@@ -265,7 +265,7 @@ public class Vol {
     /**
      * Calcule le nombre de croisements lors du parcours. Les croisement sont
      * soit des segments qui se croisent ou deux coordonnées se superposant tel
-     * que le départ et l'arrivé.
+     * que le départ et l'arrivé. Les segments ne se supperposent pas.
      *
      * @return Le nombre de croisements
      */
