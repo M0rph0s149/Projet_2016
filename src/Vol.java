@@ -361,8 +361,7 @@ public class Vol {
 
     /**
      * Calcul le nombre de coordonnées atteintes lors d'un parcours imposé.
-     * L'ordre d'atteinte des coordonnées est importante. une coordonnées peut
-     * être comptée plusieurs fois. Si l'ordre n'est pas respecté, le programme
+     * L'ordre d'atteinte des coordonnées est importante. Si l'ordre n'est pas respecté, le programme
      * retourne le nombre de cibles atteintes avant que le l'ordre ne fût
      * perturbé.
      * 
