@@ -270,9 +270,10 @@ public class Vol {
     }
 
     /**
-     * Calcule le nombre de croisements lors du parcours. Les croisement sont
+     * Calcule le nombre de croisements lors du parcours. Les croisements sont
      * soit des segments qui se croisent ou deux coordonnées se superposant tel
      * que le départ et l'arrivé. Les segments ne se supperposent pas.
+     * Un crosiement de segment n'est comptée qu'une seule fois.
      *
      * @return Le nombre de croisements
      */
@@ -295,7 +296,7 @@ public class Vol {
     }
 
     /**
-     * Cherche les coordonnées atteintes lors du parcours parmi un tableau de
+     * Cherche les coordonnées atteintes lors du parcours sans doublon, parmi un tableau de
      * Coordonnees données. L'ordre des cibles n'a pas d'importance ainsi que
      * leur affichage.
      *
@@ -312,18 +313,13 @@ public class Vol {
             if(cible == null){
                 throw new IllegalArgumentException("cibles contient au moins un élément null !");
             }
-            for (int i = 1; i < cibles.length; i++) {
-                if(cible == cibles[i]){
-                    throw new IllegalArgumentException("Doublons présent !");
-                }
-            }
         }
         
         return calculCiblesAtteintes(cibles);
     }
     
     /**
-     * Cherche les coordonnées atteintes lors du parcours parmi un tableau de
+     * Cherche les coordonnées atteintes lors du parcours sans doublon, parmi un tableau de
      * Coordonnees données. L'ordre des cibles n'a pas d'importance ainsi que
      * leur affichage.
      *
