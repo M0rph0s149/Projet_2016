@@ -150,9 +150,9 @@ public class Vol {
      * @return Coodonnees la plus proche de la coordonnée cible
      * @throws IllegalArgumentException Si cible est null
      */
-    public Coordonnees lieuPlusProcheCible(Coordonnees cible) {
+    public Coordonnees coordonnéesPlusProcheCible(Coordonnees cible) {
         if (cible == null) {
-            throw new IllegalArgumentException("cible est null, ne peut -être null !");
+            throw new IllegalArgumentException("cible est null, ne peut-être null !");
         }
 
         double distanceMin = cible.distance(tableCoordonnees[0]);
@@ -293,8 +293,10 @@ public class Vol {
      * leur affichage.
      *
      * @param cibles Tableau de Coordonnees sans doublon.
+     * 
      * @return Le nombre de cibles atteintes parmi les cibles données,une
      * cible atteinte plusieurs fois n'est comptée qu'une fois.
+     * 
      * @throws IllegalArgumentException Si cibles contient au moins un élément
      * null
      */
@@ -303,8 +305,30 @@ public class Vol {
             if(cible == null){
                 throw new IllegalArgumentException("cibles contient au moins un élément null !");
             }
+            for (int i = 1; i < cibles.length; i++) {
+                if(cible == cibles[i]){
+                    throw new IllegalArgumentException("Doublons présent !");
+                }
+            }
         }
         
+        return calculCiblesAtteintes(cibles);
+    }
+    
+    /**
+     * Cherche les coordonnées atteintes lors du parcours parmi un tableau de
+     * Coordonnees données. L'ordre des cibles n'a pas d'importance ainsi que
+     * leur affichage.
+     *
+     * @param cibles Tableau de Coordonnees sans doublon.
+     * 
+     * @return Le nombre de cibles atteintes parmi les cibles données,une
+     * cible atteinte plusieurs fois n'est comptée qu'une fois.
+     * 
+     * @throws IllegalArgumentException Si cibles contient au moins un élément
+     * null
+     */
+    private Coordonnees[] calculCiblesAtteintes(Coordonnees[] cibles){
         ArrayList<Coordonnees> atteint = new ArrayList();
 
         for (Coordonnees cible : cibles) {
@@ -336,8 +360,10 @@ public class Vol {
      * perturbé.
      * 
      * @param parcoursImpose Tableau de Coordonnees, doublon autorisés.
+     * 
      * @return Le nombre de coordonnées atteintes, une coordonnées peut être
      * survolée plusieurs fois.
+     * 
      * @throws IllegalArgumentException Si parcoursImpose contient au moins un
      * élément null
      */

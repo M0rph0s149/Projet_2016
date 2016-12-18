@@ -29,7 +29,7 @@ public class TraitementVol {
                     coordonneesExtreme();
                     break;
                 case 4:
-                    lieuPlusProcheCible();
+                    coordonnéesPlusProcheCible();
                     break;
                 case 5:
                     distanceTotale();
@@ -74,11 +74,11 @@ public class TraitementVol {
     }
 
     public static Coordonnees lireCoordonnees() {									//METHODE NON TESTEE
-        System.out.print("Quelle longitude?\nLongitude:");
-        long longitude = scanner.nextLong();
-
         System.out.print("Quelle latitude?\nLatitude:");
         long latitude = scanner.nextLong();
+        
+        System.out.print("Quelle longitude?\nLongitude:");
+        long longitude = scanner.nextLong();
 
         return new Coordonnees(latitude, longitude);
     }
@@ -128,9 +128,9 @@ public class TraitementVol {
         }
     }
 
-    public static void lieuPlusProcheCible() {
+    public static void coordonnéesPlusProcheCible() {
         System.out.println("\nVeuillez rentrer les coordonnees d'une cible a atteindre lors de votre parcours.");
-        System.out.println("Le point le plus proche d'une cible est aux coordonnees " + vol.lieuPlusProcheCible(lireCoordonnees()).toString());
+        System.out.println("Le point le plus proche d'une cible est aux coordonnees " + vol.coordonnéesPlusProcheCible(lireCoordonnees()).toString());
     }
 
     public static void distanceTotale() {
@@ -149,8 +149,15 @@ public class TraitementVol {
 
     public static void ciblesAtteintes() {
         Coordonnees[] parcours = creerParcours();
-        System.out.println("\nLes cibles atteintes sont: ");
-        afficherParcours(vol.ciblesAtteintes(parcours));
+        
+        Coordonnees[] tab = vol.ciblesAtteintes(parcours);
+        if(tab.length == 0){
+            System.out.println("\nAucune cible atteintes");
+        }else{
+            System.out.println("\nLes cibles atteintes sont: ");
+            afficherParcours(vol.ciblesAtteintes(parcours));
+        }
+        
     }
 
     public static void nbCibleAtteintesParcoursImpose() {
