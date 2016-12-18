@@ -23,6 +23,7 @@ public class Vol {
      * @param pilote Nom du pilote
      * @param tableCoordonnees Table de coordonnées par lesquelles le vol est
      * passé
+     * 
      * @throws IllegalArgumentException Si date est null
      * @throws IllegalArgumentException Si pilote est null
      * @throws IllegalArgumentException Si tableCoordonnees contient au moins un
@@ -66,12 +67,14 @@ public class Vol {
     public Coordonnees lieuxLePLusEloigneDuPointDepart() {
         double distanceMaximale = 0;
         Coordonnees coordonneeMax = null;
+        
         for (int i = 1; i < this.NB_COORDONNEE; i++) {
             if (tableCoordonnees[i].distance(this.tableCoordonnees[0]) > distanceMaximale) {
                 distanceMaximale = tableCoordonnees[i].distance(this.tableCoordonnees[0]);
                 coordonneeMax = this.tableCoordonnees[i];
             }
         }
+        
         return coordonneeMax;
     }
 
@@ -99,6 +102,7 @@ public class Vol {
     private Coordonnees[] extremeNordEtSud() {
         long latitudeMax = 0;
         long latitudeMin = 0;
+        
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
 
@@ -125,6 +129,7 @@ public class Vol {
     private Coordonnees[] extremeOuestEtEst() {
         long longitudeMin = 0;
         long longitudeMax = 0;
+        
         Coordonnees coordonneeMin = this.tableCoordonnees[0];
         Coordonnees coordonneeMax = this.tableCoordonnees[0];
 
@@ -234,6 +239,7 @@ public class Vol {
      */
     private double contournement1() {
         double distance = 0;
+        
         for (int i = 0; i < NB_COORDONNEE; i++) {
             if (distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i])) {
                 distance = tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[i]);
@@ -252,6 +258,7 @@ public class Vol {
      */
     private double contournement2() {
         double distance = 0;
+        
         for (int i = 0; i < NB_COORDONNEE; i++) {
             for (int j = i + 1; j < NB_COORDONNEE; j++) {
                 if (distance < tableCoordonnees[0].distance(tableCoordonnees[i]) + tableCoordonnees[i].distance(tableCoordonnees[j]) + tableCoordonnees[NB_COORDONNEE - 1].distance(tableCoordonnees[j])) {
@@ -376,16 +383,19 @@ public class Vol {
 
         int cpt = 0;
         int cpt2 = 0;
+        
         for (Coordonnees coordonnees : parcoursImpose) {
             for (int i = 0; i < NB_COORDONNEE - 1; i++) {
                 if (tableCoordonnees[i].equals(coordonnees)) {
                     cpt++;
                     break;
+                    
                 } else if (i <= NB_COORDONNEE - 1 && Coordonnees.segmentsCroises(tableCoordonnees[i], tableCoordonnees[i + 1], coordonnees, coordonnees)) {
                     cpt++;
                     break;
                 }
             }
+            
             cpt2++;
             if (cpt != cpt2) {
                 return cpt;
