@@ -36,7 +36,6 @@ public class Vol {
         if (pilote == null) {
             throw new IllegalArgumentException("pilote est null, ne peut-être null !");
         }
-
         for (Coordonnees coordonnees : tableCoordonnees) {
             if(coordonnees == null){
                 throw new IllegalArgumentException("tableCoordonnees contient au moins un élément null !");
@@ -300,7 +299,7 @@ public class Vol {
      * Coordonnees données. L'ordre des cibles n'a pas d'importance ainsi que
      * leur affichage.
      *
-     * @param cibles Tableau de Coordonnees sans doublon.
+     * @param cibles Tableau de Coordonnees sans doublon !
      * 
      * @return Le nombre de cibles atteintes parmi les cibles données,une
      * cible atteinte plusieurs fois n'est comptée qu'une fois.
@@ -323,7 +322,7 @@ public class Vol {
      * Coordonnees données. L'ordre des cibles n'a pas d'importance ainsi que
      * leur affichage.
      *
-     * @param cibles Tableau de Coordonnees sans doublon.
+     * @param cibles Tableau de Coordonnees sans doublon !
      * 
      * @return Le nombre de cibles atteintes parmi les cibles données,une
      * cible atteinte plusieurs fois n'est comptée qu'une fois.
